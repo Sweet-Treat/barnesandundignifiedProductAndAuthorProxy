@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded( {extended: true} ));
 app.use(express.json());
 app.use(cors());
 
+
 // productSetails service - get a specific book /product/:isbn13
 // send request to localhost: 5001 and return the response to the user
 app.get('/products/:isbn13', (req, res) => {
@@ -40,6 +41,7 @@ app.get('/publisher', (req, res) => {
       res.status(500).send(error);
     });
 });
+
 // productSetails service - redirect to series page (an empty page)
 app.get('/series', (req, res) => {
   axios.get('http://localhost:5001/series')
@@ -147,10 +149,37 @@ app.get('/products/:rootIsbn/alsoBought', (req, res) => {
   });
 });
 
-// app.get('/?isbn=:isbn',function(req,res) {
-//   console.log("PROXY: Got ISBN", req.params.isbn);
-//   res.sendFile(path.join(__dirname+'/../public/index.html'));
-// });
+
+// ********serving bundle.js from the server instead of the index.html******
+
+
+
+var getBundle = (service, internalUrl,successStr,failureStr) => {
+
+  app.get(service, (req, res) => {
+    axios.get(internalUrl)
+    .then((response)=> {
+    // handle success
+      console.log(successStr);
+      res.status(200).send(response.data);
+    })
+    .catch((error)=> {
+    // handle error
+      console.log(failureStr, error);
+      res.status(500).send(error);
+    });
+  });
+}
+
+getBundle('/itemSelectionBundle.js', `http://localhost:3001/bundle.js`, 'In bundle.js 3001', 'bundle.js 3001 gets PROXY error:');
+
+getBundle('/productDetailsBundle.js', `http://localhost:5001/bundle.js`, 'In bundle.js 5001', 'In bundle.js 5001 gets PROXY error:');
+
+getBundle('/alsoBoughtBundle.js', `http://localhost:3004/bundle.js`,'In bundle.js 3004', 'bundle.js 3004 gets PROXY error:');
+
+getBundle('/reviewsBundle.js',`http://localhost:8000/bundle.js`,'In bundle.js 8000','bundle.js 8000 gets PROXY error:');
+
+
 
 app.use(express.static('public'));
 app.listen(port, () => {
