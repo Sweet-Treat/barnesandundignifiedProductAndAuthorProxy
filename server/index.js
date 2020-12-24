@@ -29,6 +29,26 @@ app.get('/products/:isbn13', (req, res) => {
     });
 });
 
+// productSetails service - get the author information by his/her author name
+// send request to localhost: 5001 and return the response to the user
+
+app.get('/author/:author', (req, res) => {
+  console.log('author:', req.params.author);
+  axios.get(`http://localhost:5001/author/${req.params.author}`)
+  .then((response)=> {
+    // handle success
+      console.log('ProductDetails PROXY: get an author information his/her name' /* ,response.data*/);
+      res.status(200).send(response.data);
+    })
+    .catch((error)=> {
+    // handle error
+      console.log('ProductDetails PROXY error:', error);
+      res.status(500).send(error);
+    });
+});
+
+
+
 // productDetails service - redirect to publisher page (an empty page)
 app.get('/publisher', (req, res) => {
   axios.get('http://localhost:5001/publisher')
