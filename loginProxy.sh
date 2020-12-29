@@ -1,0 +1,1 @@
+ssh -i "/Users/avigail/Desktop/FEC/barnesandundignifiedProductAndAuthor/productdetails.pem" ubuntu@ec2-3-129-196-220.us-east-2.compute.amazonaws.com

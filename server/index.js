@@ -3,7 +3,10 @@ const express = require('express')
 const app = express()
 const axios = require('axios');
 var cors = require('cors');
-const port = 9009;
+
+const dotenv = require('dotenv');
+dotenv.config();
+const port = process.env.PORT_PROXY;
 
 const bodyParser = require ('body-parser');
 app.use(cors());
@@ -11,12 +14,15 @@ app.use(bodyParser.urlencoded( {extended: true} ));
 app.use(express.json());
 app.use(cors());
 
+const portProductDetails = process.env.PORT_PRODUCT_DETAILS;
+const serverProductDetails = process.env.SERVER_PRODUCT_DETAILS;
+console.log(`productDetails is at ${serverProductDetails}:${portProductDetails}`);
 
 // productSetails service - get a specific book /product/:isbn13
 // send request to localhost: 5001 and return the response to the user
 app.get('/products/:isbn13', (req, res) => {
   console.log('ProductDetails ISBN:', req.params.isbn13);
-  axios.get(`http://localhost:5001/products/${req.params.isbn13}`)
+  axios.get(`http://${serverProductDetails}:${portProductDetails}/products/${req.params.isbn13}`)
     .then((response)=> {
     // handle success
       console.log('ProductDetails PROXY: get a specific book' /* ,response.data*/);
@@ -34,7 +40,7 @@ app.get('/products/:isbn13', (req, res) => {
 
 app.get('/author/:author', (req, res) => {
   console.log('author:', req.params.author);
-  axios.get(`http://localhost:5001/author/${req.params.author}`)
+  axios.get(`http://${serverProductDetails}:${portProductDetails}/author/${req.params.author}`)
   .then((response)=> {
     // handle success
       console.log('ProductDetails PROXY: get an author information his/her name' /* ,response.data*/);
@@ -51,7 +57,7 @@ app.get('/author/:author', (req, res) => {
 
 // productDetails service - redirect to publisher page (an empty page)
 app.get('/publisher', (req, res) => {
-  axios.get('http://localhost:5001/publisher')
+  axios.get(`http://${serverProductDetails}:${portProductDetails}/publisher`)
    .then ((response) => {
     console.log('ProductDetails publisher PROXY:', response.data);
     res.status(200).send(response.data);
@@ -64,7 +70,7 @@ app.get('/publisher', (req, res) => {
 
 // productSetails service - redirect to series page (an empty page)
 app.get('/series', (req, res) => {
-  axios.get('http://localhost:5001/series')
+  axios.get(`http://${serverProductDetails}:${portProductDetails}/series`)
    .then ((response) => {
     console.log('ProductDetails series PROXY:', response.data);
     res.status(200).send(response.data);
@@ -79,7 +85,7 @@ app.get('/series', (req, res) => {
 // productSetails service - get books by category
 app.get('/category/:bookCategory', (req, res) => {
   console.log('ProductDetails bookCategory:', req.params.bookCategory);
-  axios.get(`http://localhost:5001/category/${req.params.bookCategory}`)
+  axios.get(`http://${serverProductDetails}:${portProductDetails}/category/${req.params.bookCategory}`)
   .then ((response) => {
     console.log('ProductDetails bookCategory PROXY:', response.data);
     res.status(200).send(response.data);
@@ -193,7 +199,7 @@ var getBundle = (service, internalUrl,successStr,failureStr) => {
 
 getBundle('/itemSelectionBundle.js', `http://localhost:3001/bundle.js`, 'In bundle.js 3001', 'bundle.js 3001 gets PROXY error:');
 
-getBundle('/productDetailsBundle.js', `http://localhost:5001/bundle.js`, 'In bundle.js 5001', 'In bundle.js 5001 gets PROXY error:');
+getBundle('/productDetailsBundle.js', `http://${serverProductDetails}:${portProductDetails}/bundle.js`, 'In bundle.js 5001', 'In bundle.js 5001 gets PROXY error:');
 
 getBundle('/alsoBoughtBundle.js', `http://localhost:3004/bundle.js`,'In bundle.js 3004', 'bundle.js 3004 gets PROXY error:');
 
