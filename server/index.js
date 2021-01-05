@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded( {extended: true} ));
 app.use(express.json());
 app.use(cors());
 
+//product details
 const portProductDetails = process.env.PORT_PRODUCT_DETAILS;
 const serverProductDetails = process.env.SERVER_PRODUCT_DETAILS;
 console.log(`productDetails is at ${serverProductDetails}:${portProductDetails}`);
@@ -96,11 +97,16 @@ app.get('/category/:bookCategory', (req, res) => {
     });
 });
 
+// item selection
+const portItemSelection = process.env.PORT_ITEM_SELECTION;
+const serverItemSelection = process.env.SERVER_ITEM_SELECTION;
+console.log(`itemSelection is at ${serverItemSelection}:${portItemSelection}`);
+
 // itemSelection service - get formats of an specific book product/:isbn13/formats
 // send request to localhost: 3001 and return the response to the user
 app.get('/product/:isbn13/formats', (req, res) => {
   console.log('itemSelection ISBN:', req.params.isbn13);
-  axios.get(`http://localhost:3001/product/${req.params.isbn13}/formats`)
+  axios.get(`http://${serverItemSelection}:${portItemSelection}/product/${req.params.isbn13}/formats`)
     .then((response)=> {
     // handle success
       console.log('itemSelection PROXY: get a specific book foramts:', response.data);
@@ -197,7 +203,7 @@ var getBundle = (service, internalUrl,successStr,failureStr) => {
   });
 }
 
-getBundle('/itemSelectionBundle.js', `http://localhost:3001/bundle.js`, 'In bundle.js 3001', 'bundle.js 3001 gets PROXY error:');
+getBundle('/itemSelectionBundle.js', `http://${serverItemSelection}:${portItemSelection}/bundle.js`, 'In bundle.js 3001', 'bundle.js 3001 gets PROXY error:');
 
 getBundle('/productDetailsBundle.js', `http://${serverProductDetails}:${portProductDetails}/bundle.js`, 'In bundle.js 5001', 'In bundle.js 5001 gets PROXY error:');
 
