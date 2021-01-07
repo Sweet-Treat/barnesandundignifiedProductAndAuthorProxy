@@ -119,9 +119,15 @@ app.get('/product/:isbn13/formats', (req, res) => {
     });
 });
 
+
+// reviews
+const portReviews = process.env.PORT_REVIEWS;
+const serverReviews = process.env.SERVER_REVIEWS;
+console.log(`reviews is at ${serverReviews}:${portReviews}`);
+
 // reviews service - getting reviews
 app.get('/books/:identifier/reviews', (req, res) => {
-  axios.get(`http://localhost:8000/books/${req.params.identifier}/reviews`)
+  axios.get(`http://${serverReviews}:${portReviews}/${req.params.identifier}/reviews`)
   .then((response)=> {
   // handle success
     console.log('reviews PROXY:', response.data);
@@ -137,7 +143,7 @@ app.get('/books/:identifier/reviews', (req, res) => {
 
 // reviews servicev - getting reviews summary
 app.get('/books/:identifier/reviews/summary', (req, res) => {
-  axios.get(`http://localhost:8000/books/${req.params.identifier}/reviews/summary`)
+  axios.get(`http://${serverReviews}:${portReviews}/books/${req.params.identifier}/reviews/summary`)
   .then((response)=> {
   // handle success
     console.log('reviews summary PROXY:', response.data);
@@ -152,7 +158,7 @@ app.get('/books/:identifier/reviews/summary', (req, res) => {
 
 // reviews service - update review
 app.put('/books/:identifier/review/:id', (req, res) => {
-  axios.put(`http://localhost:8000/books/${req.params.identifier}/review/${req.params.id}`, req.body)
+  axios.put(`http://${serverReviews}:${portReviews}/books/${req.params.identifier}/review/${req.params.id}`, req.body)
   .then((response)=> {
   // handle success
     console.log('reviews update PROXY:', response.data);
@@ -209,7 +215,7 @@ getBundle('/productDetailsBundle.js', `http://${serverProductDetails}:${portProd
 
 getBundle('/alsoBoughtBundle.js', `http://localhost:3004/bundle.js`,'In bundle.js 3004', 'bundle.js 3004 gets PROXY error:');
 
-getBundle('/reviewsBundle.js',`http://localhost:8000/bundle.js`,'In bundle.js 8000','bundle.js 8000 gets PROXY error:');
+getBundle('/reviewsBundle.js',`http://${serverReviews}:${portReviews}/bundle.js`,'In bundle.js 8000','bundle.js 8000 gets PROXY error:');
 
 
 
