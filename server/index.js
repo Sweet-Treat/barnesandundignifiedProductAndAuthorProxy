@@ -173,8 +173,13 @@ app.put('/books/:identifier/review/:id', (req, res) => {
 });
 
 // also bought service
+
+const portAlsoBought = process.env.PORT_ALSO_BOUGHT;
+const serverAlsoBought = process.env.PORT_ALSO_BOUGHT;
+console.log(`alsoBought is at ${serverAlsoBought}:${portAlsoBought}`);
+
 app.get('/products/:rootIsbn/alsoBought', (req, res) => {
-  axios.get(`http://localhost:3004/products/${req.params.rootIsbn}/alsoBought`)
+  axios.get(`http://${serverAlsoBought}:${portAlsoBought}/products/${req.params.rootIsbn}/alsoBought`)
   .then((response)=> {
   // handle success
     console.log('also bought get PROXY:', response.data);
@@ -213,7 +218,7 @@ getBundle('/itemSelectionBundle.js', `http://${serverItemSelection}:${portItemSe
 
 getBundle('/productDetailsBundle.js', `http://${serverProductDetails}:${portProductDetails}/bundle.js`, 'In bundle.js 5001', 'In bundle.js 5001 gets PROXY error:');
 
-getBundle('/alsoBoughtBundle.js', `http://localhost:3004/bundle.js`,'In bundle.js 3004', 'bundle.js 3004 gets PROXY error:');
+getBundle('/alsoBoughtBundle.js', `http://${serverAlsoBought}:${portAlsoBought}/bundle.js`,'In bundle.js 3004', 'bundle.js 3004 gets PROXY error:');
 
 getBundle('/reviewsBundle.js',`http://${serverReviews}:${portReviews}/bundle.js`,'In bundle.js 8000','bundle.js 8000 gets PROXY error:');
 
