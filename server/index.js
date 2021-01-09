@@ -173,9 +173,8 @@ app.put('/books/:identifier/review/:id', (req, res) => {
 });
 
 // also bought service
-
 const portAlsoBought = process.env.PORT_ALSO_BOUGHT;
-const serverAlsoBought = process.env.PORT_ALSO_BOUGHT;
+const serverAlsoBought = process.env.SERVER_ALSO_BOUGHT;
 console.log(`alsoBought is at ${serverAlsoBought}:${portAlsoBought}`);
 
 app.get('/products/:rootIsbn/alsoBought', (req, res) => {
