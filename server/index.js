@@ -195,7 +195,7 @@ app.get('/products/:rootIsbn/alsoBought', (req, res) => {
 // ********serving bundle.js from the server instead of the index.html******
 
 
-
+/*not in use anymore because of the S3
 var getBundle = (service, internalUrl,successStr,failureStr) => {
 
   app.get(service, (req, res) => {
@@ -213,15 +213,18 @@ var getBundle = (service, internalUrl,successStr,failureStr) => {
   });
 }
 
-getBundle('/itemSelectionBundle.js', `http://${serverItemSelection}:${portItemSelection}/bundle.js`, 'In bundle.js 3001', 'bundle.js 3001 gets PROXY error:');
-
-getBundle('/productDetailsBundle.js', `http://${serverProductDetails}:${portProductDetails}/bundle.js`, 'In bundle.js 5001', 'In bundle.js 5001 gets PROXY error:');
-
-getBundle('/alsoBoughtBundle.js', `http://${serverAlsoBought}:${portAlsoBought}/bundle.js`,'In bundle.js 3004', 'bundle.js 3004 gets PROXY error:');
-
-getBundle('/reviewsBundle.js',`http://${serverReviews}:${portReviews}/bundle.js`,'In bundle.js 8000','bundle.js 8000 gets PROXY error:');
+//getBundle('/itemSelectionBundle.js', `http://${serverItemSelection}:${portItemSelection}/bundle.js`, 'In bundle.js 3001', 'bundle.js 3001 gets PROXY error:');
 
 
+//getBundle('/productDetailsBundle.js', `http://${serverProductDetails}:${portProductDetails}/bundle.js`, 'In bundle.js 5001', 'In bundle.js 5001 gets PROXY error:');
+
+
+//getBundle('/alsoBoughtBundle.js', `http://${serverAlsoBought}:${portAlsoBought}/bundle.js`,'In bundle.js 3004', 'bundle.js 3004 gets PROXY error:');
+
+
+//getBundle('/reviewsBundle.js',`http://${serverReviews}:${portReviews}/bundle.js`,'In bundle.js 8000','bundle.js 8000 gets PROXY error:');
+
+*/
 
 app.use(express.static('public'));
 app.listen(port, () => {

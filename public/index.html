@@ -33,21 +33,28 @@
     <head>
       <meta charset="utf-8">
       <title>main</title>
-      <link rel="styleSheet" href="http://18.188.228.195:3001/style.css">
-      <link rel="styleSheet" href="http://54.183.241.255:3004/style.css">
-      <link rel="styleSheet" href="http://3.140.58.207:8000/style.css">
+      <!--Item Selection-->
+      <link rel="styleSheet" href="http://fec-bucket.s3-website.us-east-2.amazonaws.com/style.css">
+      <!--Also Bought-->
+      <link rel="styleSheet" href="http://mybundle.s3-website-us-west-1.amazonaws.com/style.css">
+      <link rel="styleSheet" href="https://barnesandundignifiedreviews.s3-us-west-1.amazonaws.com/style.css">
+
     </head>
     <body>
+      <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+      <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 
       <div id="item-selection"></div>
       <div id="also-bought"></div>
       <div id="product-details"></div>
       <div id="reviews"></div>
-
-      <script src="/ItemSelectionBundle.js"></script>
-      <script src="/alsoBoughtBundle.js"></script>
-      <script src="/productDetailsBundle.js"></script>
-      <script src="/reviewsBundle.js"></script>
+      <!--ItemSelection-->
+      <script src="http://fec-bucket.s3-website.us-east-2.amazonaws.com/bundle.js"></script>
+      <!--Also Bought -->
+      <script src="http://mybundle.s3-website-us-west-1.amazonaws.com/"></script>
+      <script src="https://s3-us-west-1.amazonaws.com/product.and.author.files/dist/bundlegz.js"></script>
+      <script src="https://barnesandundignifiedreviews.s3-us-west-1.amazonaws.com/dist/bundle.js"></script>
 
     </body>
 </html>
+
